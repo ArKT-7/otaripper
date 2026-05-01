@@ -520,17 +520,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5e5032e24019045c762d3c0f28f5b6b8bbf38563a65908389bf7978758920897"
 
 [[package]]
-name = "lzma-sys"
-version = "0.1.20"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5fda04ab3764e6cde78b9974eec4f779acaba7c4e84b36eca3cf77c581b85d27"
-dependencies = [
- "cc",
- "libc",
- "pkg-config",
-]
-
-[[package]]
 name = "memchr"
 version = "2.7.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -679,7 +668,7 @@ dependencies = [
  "ring",
  "sysinfo",
  "tempfile",
- "xz2",
+ "xz",
  "zip",
 ]
 
@@ -1184,12 +1173,21 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f17a85883d4e6d00e8a97c586de764dabcc06133f7f1d55dce5cdc070ad7fe59"
 
 [[package]]
-name = "xz2"
-version = "0.1.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "388c44dc09d76f1536602ead6d325eb532f5c122f17782bd57fb47baeeb767e2"
+name = "xz"
+version = "0.4.6"
+source = "git+https://github.com/youknowone/xz-rs#dab9f655bafc1d3668440ea1faa2acbfb7088964"
 dependencies = [
- "lzma-sys",
+ "xz-core",
+]
+
+[[package]]
+name = "xz-core"
+version = "0.1.0"
+source = "git+https://github.com/youknowone/xz-rs#dab9f655bafc1d3668440ea1faa2acbfb7088964"
+dependencies = [
+ "libc",
+ "memchr",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]
