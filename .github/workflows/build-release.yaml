@@ -87,8 +87,27 @@ jobs:
           AR_aarch64_unknown_linux_gnu="aarch64-linux-gnu-ar"
           EOF
 
+      - name: Build Modern XZ (liblzma) for musl
+        if: matrix.target == 'x86_64-unknown-linux-musl'
+        run: |
+          wget https://github.com/tukaani-project/xz/releases/download/v5.8.3/xz-5.8.3.tar.gz
+          tar -xf xz-5.8.3.tar.gz
+          rm xz-5.8.3.tar.gz
+          cd xz-5.8.3
+          sudo apt-get update && sudo apt-get install -y musl-tools
+          CC=musl-gcc ./configure --disable-shared --enable-static --prefix=$HOME/musl-xz
+          make -j$(nproc)
+          make install
+
       - name: Build
-        run: cargo build --release --target ${{ matrix.target }}
+        run: |
+          if [ "${{ matrix.target }}" == "x86_64-unknown-linux-musl" ]; then
+            export PKG_CONFIG_ALLOW_CROSS=1
+            export PKG_CONFIG_PATH=$HOME/musl-xz/lib/pkgconfig
+            CC=musl-gcc cargo build --release --target ${{ matrix.target }}
+          else
+            cargo build --release --target ${{ matrix.target }}
+          fi
 
       - name: Package
         shell: bash

@@ -39,7 +39,7 @@ libc = "0.2.186"
 
 # Compatibility: Static liblzma only on musl to avoid glibc x86-64-v4 issues
 [target.'cfg(target_env = "musl")'.dependencies]
-xz2 = { version = "0.1.7", features = ["static"] }
+xz2 = { version = "0.1.7" }
 
 
 [profile.release]
